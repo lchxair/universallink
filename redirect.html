@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+    <script>
+        // 配置微信JS-SDK
+        // wx.config({
+        //     debug: false, // 开启调试模式
+        //     appId: 'YOUR_APP_ID', // 必填，公众号的唯一标识
+        //     timestamp: YOUR_TIMESTAMP, // 必填，生成签名的时间戳
+        //     nonceStr: 'YOUR_NONCESTR', // 必填，生成签名的随机串
+        //     signature: 'YOUR_SIGNATURE', // 必填，签名
+        //     jsApiList: ['navigateToMiniProgram'] // 必填，需要使用的JS接口列表
+        // });
+
+        wx.ready(function () {
+            wx.miniProgram.navigateTo({
+                appId: 'wxe5c197e33eb355ba',
+                path: 'pages/index/index', // 小程序页面路径
+                extraData: {
+                    foo: 'bar'
+                },
+                envVersion: 'release',
+                success(res) {
+                    // 打开成功
+                },
+                fail(err) {
+                    // 打开失败
+                    console.error(err);
+                }
+            });
+        });
+
+        wx.error(function (err) {
+            console.error(err);
+        });
+    </script>
+</head>
+<body>
+    <p>正在跳转...</p>
+</body>
+</html>
