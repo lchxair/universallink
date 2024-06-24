@@ -48,7 +48,74 @@
 </head>
 
 <body>
+  <script>
+       function getPlatform() {
+            var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
+            if (/android/i.test(userAgent)) {
+                return 1; // Android设备
+            } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                return 0; // iOS设备
+            } else {
+                return -1; // 其他设备
+            }
+        }
+
+      function getDeviceInfo() {
+            var language = navigator.language || navigator.userLanguage;
+            var timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            var region = Intl.DateTimeFormat().resolvedOptions().locale;
+            var os = navigator.platform;
+            var osVersion = navigator.appVersion;
+            var deviceModel = navigator.userAgent;
+
+            return {
+                language: language,
+                timezone: timezone,
+                region: region,
+                os: os,
+                osVersion: osVersion,
+                deviceModel: deviceModel
+            };
+        }
+      
+        function makeRequest() {
+            var url = "https://apiqa.magictiger.ai/api/v1/local_download_stat/add";
+            var platform = getPlatform();
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'ver': '',
+                    'buildver': '',
+                    'language': deviceInfo.language,
+                    'pid': '10000',
+                    'platform': getPlatform(),
+                    'timeZone': deviceInfo.timezone,
+                    'model': deviceInfo.deviceModel,
+                    'area': '',
+                    'osVersion': deviceInfo.osVersion
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                // 在控制台中打印返回的数据
+            })
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
+            });
+        }
+
+        // 页面加载时调用makeRequest函数
+        makeRequest();
+    </script>
 </body>
 
 </html>
